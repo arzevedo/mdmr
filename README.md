@@ -2,55 +2,54 @@
 
 MDM is a Bayesian dynamic regression model used to estimate effective connectivity between variables over time. Currently, this software employs the `reticulate` package to establish a connection between the GOBNILP algorithm and the R software.
 
-AL suggestions to improve the package are appreciated! If you have any, please send a email to the package maintainer.
+Any suggestions to improve the package are appreciated! If you have any, please send an email to the package maintainer.
 
-## Instalation
+## Installation
 
-To install the **Multiregression Dynamic Models** package `mdmr` in the development version from GitHub, just use the command:
+To install the **Multiregression Dynamic Models** package `mdmr` from the development version on GitHub, just use the command:
 
 ```r
 # install.packages("devtools")
 devtools::install_github("arzevedo/mdmr")
 ```
-
-Once you have the `mdmr` package installed, you must install Python in your machine if you still doest have that installed. It's recommended that you use the `reticulate` package
+Once you have the `mdmr` package installed, you must install Python on your machine if you haven't already. It's recommended that you use the `reticulate` package:
 
 ```r
 reticulate::install_python()
 ```
 
-Next, you should build an environment with the sole purpose of running the GOBNILP algorithm. You may do this with the following code to install the `pygobnilp` package in your environment.
+Next, you should build an environment with the sole purpose of running the GOBNILP algorithm. You can do this with the following code to install the `pygobnilp` package in your environment.
 
-The first argument is the name of the environment and the second is the package.
+The first argument is the name of the environment, and the second is the package:
 
 ```r
 reticulate::virtualenv_install("r-reticulate", "pygobnilp")
 ```
 
-Once you installed everything you need, you may access python from the environment with the following function
+Once you've installed everything you need, you can access Python from the environment using the following function:
 
 ```r
 reticulate::use_virtualenv("r-reticulate")
 ```
 
-If you run across any problem with the code above, If you have any problems, you can go to the `reticulate` official website and check the documentation.
+If you encounter any problems with the code above, you can go to the `reticulate` official website and check the documentation.
 
 ## A built-in application
 
-First you may load the package. `mdmr` has a built-in dataset, that consist of new weekly COVID-19 cases in the five macro regions of Brazil until march 2023.
+First, load the package. `mdmr` has a built-in dataset that consists of new weekly COVID-19 cases in the five macro regions of Brazil until March 2023.
 
 ```r
 library(mdmr)
 covid_data <- mdmr::regioes
 ```
 
-Next, you can calculate the scores for the network 
+Next, you can calculate the scores for the network:
 
 ```r
 mdmModel <- mdm_score(covid_data, GOLB_print = TRUE)
 ```
 
-This saves a text file in you enviroment. This file will be used by the GOBNILP algorithm. Now, you can use the `run_BN_pygobnilp` function to obtain the adjancy matrix.
+This saves a text file in your environment. This file will be used by the GOBNILP algorithm. Now, you can use the `run_BN_pygobnilp` function to obtain the adjacency matrix:
 
 ```r
 adj_matrix_GOB <- mdmr::run_BN_pygobnilp("mdm_score_07_ago_2023", palim = 5)
@@ -58,7 +57,7 @@ m_ad <- adj_matrix_GOB$wide
 
 ```
 
-To vizualize the static structure you could use the ggplot package
+To visualize the static structure, you could use the ggplot package:
 
 ```r
 library(tidyverse)
@@ -81,19 +80,19 @@ adj_matrix_GOB$long |>
       theme(legend.position = "none")
 ```
 
-The next step requires a reorder of the data input 
+The next step requires a reordering of the data input: 
 
 ```r
 covid_data <- covid_data[,sort(colnames(covid_data))]
 ```
 
-Find the discount factor that maximizes the LPL
+Find the discount factor that maximizes the LPL:
 
 ```r
 DF = mdmr::CDELT(dts = as.matrix(covid_data), m_ad = m_ad)
 ```
 
-Now we use the `mdm_filt` to collect the dynamic parameters.
+Now we use the `mdm_filt` function to collect the dynamic parameters:
 
 ```r
 Filt = mdmr::mdm_filt(
@@ -106,7 +105,8 @@ Filt = mdmr::mdm_filt(
       DF$DF_hat)
 ```
 
-And finally, it's possible to smooth the distributions
+And finally, it's possible to smooth the distributions:
+
 ```r
 Smoo = mdmr::mdm_smoo(Filt$mt, Filt$Ct, Filt$Rt, Filt$nt, Filt$dt)
 
@@ -114,7 +114,7 @@ Smoo = mdmr::mdm_smoo(Filt$mt, Filt$Ct, Filt$Rt, Filt$nt, Filt$dt)
 all_betas <- t(Reduce(x = Smoo$smt, rbind))
 ```
 
-In order to enhance comprehension of the model's output and effectively interpret the outcomes, it could be beneficial to create visualizations representing select connectivity parameters.
+To enhance comprehension of the model's output and effectively interpret the outcomes, it could be beneficial to create visualizations representing select connectivity parameters:
 
 ```r
 as_tibble(all_betas) |> 
@@ -127,7 +127,7 @@ as_tibble(all_betas) |>
 ```
 
 
-Creating a GIF of the heatmap offers a fascinating approach to visually represent the dynamic interactions among variables in the MDM model.
+Creating a GIF of the heatmap offers a fascinating approach to visually represent the dynamic interactions among variables in the MDM model:
 
 ```r
 library(gganimate)
@@ -164,7 +164,7 @@ print(animation)
 
 ## Acknowledgments
 
-The development of this r-package was built jointly with the [Dr. Lilia Costa](https://scholar.google.com/citations?user=q2wRgbQAAAAJ&hl=pt-BR&oi=ao) and Mariana Almeida.
+The development of this R package was done in collaboration with [Dr. Lilia Costa](https://scholar.google.com/citations?user=q2wRgbQAAAAJ&hl=pt-BR&oi=ao) and Mariana Almeida.
 
 
 ## Bibliography
