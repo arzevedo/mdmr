@@ -1,0 +1,18 @@
+Package: mdmr
+Type: Package
+Title: Bayesian dynamic regression model (MDM)
+Version: 0.5.4
+Author: Lilia Costa <liliacosta@ufba.br>
+Maintainer: Arthur R. Azevedo <arthur.rios@ufba.br>
+Description: MDM is a Bayesian dynamic regression model used to estimate effective connectivity between variables over time.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+      fpc,
+      stats,
+      Rcpp,
+      reticulate
+Depends: 
+    R (>= 2.10)
+RoxygenNote: 7.2.3
