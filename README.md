@@ -80,6 +80,10 @@ adj_matrix_GOB$long |>
       theme(legend.position = "none")
 ```
 
+
+<img src="man/figures/static_heatmap.png" align="center" width="500" />
+
+
 The next step requires a reordering of the data input: 
 
 ```r
@@ -161,6 +165,8 @@ animation <- fix_plot +
 
 print(animation)
 ```
+
+<img src="man/figures/covid_cases_dag3.gif" align="center" width="500" />
 
 ## Acknowledgments
 

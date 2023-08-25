@@ -32,7 +32,7 @@ dlm_smoo <- function(mt, Ct, Rt, nt, dt, Gt = 0) {
       for (i in (Nt-1):1){
             RSt = Rt[,,(i+1)]*nt[i]/dt[i]
             CSt = Ct[,,i]*nt[i]/dt[i]
-            inv.sR = solvecov(RSt, cmax = 1e+10)$inv
+            inv.sR = fpc::solvecov(RSt, cmax = 1e+10)$inv
             B = CSt %*% t(Gt[,,(i+1)]) %*% inv.sR
             smt[,i] = mt[, i] + B %*% (smt[,(i+1)] - Gt[,,(i+1)] %*% mt[,i])
             sCS = CSt + B %*% (sCt[,,(i+1)]*nt[Nt]/dt[Nt] - RSt) %*% t(B)
