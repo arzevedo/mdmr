@@ -1,4 +1,4 @@
-# MDMr: Multiregression Dynamic Models <img src="logo_dest_sembg.png" align="right" width="100" />
+# MDMr: Multiregression Dynamic Models in R <img src="logo_dest_sembg.png" align="right" width="100" />
 
 MDM is a Bayesian dynamic regression model used to estimate effective connectivity between variables over time. Currently, this software employs the `reticulate` package to establish a connection between the GOBNILP algorithm and the R software.
 
