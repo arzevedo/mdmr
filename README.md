@@ -34,9 +34,26 @@ reticulate::use_virtualenv("r-reticulate")
 
 If you encounter any problems with the code above, you can go to the `reticulate` official website and check the documentation.
 
+## Data input
+
+The data input must adhere to a specific format for the package to work properly. In the case of a single subject, you may use a dataframe or matrix class as input. In a more complex setting, it's important that the input has three dimensions. The array class will satisfy this condition. The first dimension of the array must represent the timepoints of the timeseries, the second dimension must represent the nodes or variables of each timeseries, and the third dimension represents the subjects.
+
+If your data is not currently in this format, please make the necessary adjustments.
+
+You can access a simple simulation example with 197 observations, 4 nodes, and 2 subjects as follows:
+
+```r
+library(mdmr)
+simulated_data <- mdmr::dts_4n
+
+dimnames(simulated_data)[[2]] <- paste0("var", 1:4)
+
+sim_mdm_score <- mdm_score(data_input = lol, GOLB_print = TRUE, subjects_length = 2)
+```
+
 ## A built-in application
 
-First, load the package. `mdmr` has a built-in dataset that consists of new weekly COVID-19 cases in the five macro regions of Brazil until March 2023.
+First, load the package. `mdmr` has a built-in dataset that consists of new weekly COVID-19 cases in the five macroregions of Brazil until March 2023.
 
 ```r
 library(mdmr)
