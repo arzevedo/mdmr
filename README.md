@@ -48,7 +48,7 @@ simulated_data <- mdmr::dts_4n
 
 dimnames(simulated_data)[[2]] <- paste0("var", 1:4)
 
-sim_mdm_score <- mdm_score(data_input = lol, GOLB_print = TRUE, subjects_length = 2)
+sim_mdm_score <- mdm_score(data_input = simulated_data, GOLB_print = TRUE, subjects_length = 2)
 ```
 
 ## A built-in application
