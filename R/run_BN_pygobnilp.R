@@ -39,7 +39,7 @@ run_BN_pygobnilp <- function(score_file = NULL, install_gob = FALSE,
       }
 
 
-      pattern <- "<gurobi\\.Var\\s(\\S+)->(\\S+)\\s\\(value\\s(\\d+\\.\\d+)\\)>"
+      pattern <- "<gurobi\\.Var\\s(\\S+)->(\\S+)\\s\\(value\\s-?(\\d+\\.\\d+)\\)>"
       matches <- regmatches(dag_arrow_char, regexec(pattern, dag_arrow_char))
 
       # Create the data frame
