@@ -9,7 +9,7 @@
 #' @param nt The vector of prior hypermarameters of precision phi with length T
 #' @param dt The vector of prior hypermarameters of precision phi with length T
 #' @param Gt he matrix of state equation with dimension: p X p X T. The default is identity matrix block
-#'
+#' @export
 dlm_smoo <- function(mt, Ct, Rt, nt, dt, Gt = 0) {
 
       # defining objects

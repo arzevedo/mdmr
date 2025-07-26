@@ -6,7 +6,6 @@
 #' @param dts The matrix with dataset; Number of timepoints X Number of nodes
 #' @param m_ad Square Matrix Adjacent with dimension = Number of nodes # 1 if edge exists; 0 otherwise
 #' @param DF_hat Vector with delta that maximizes the LPL for each node with dimension = Number of nodes
-#'
 mdm_filt <- function(dts, m_ad, DF_hat) {
       Nn = ncol(dts)
       Nt = nrow(dts)
