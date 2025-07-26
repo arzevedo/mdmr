@@ -16,7 +16,7 @@ devtools::install_github("arzevedo/mdmr")
 
 ---
 
-## 📘 Example Usage
+## Example Usage
 
 This walkthrough demonstrates how to use `MDMr` to learn a Bayesian network and visualize the results.
 
@@ -97,22 +97,6 @@ plot_marginal(res, target_node = 2)
 ```
 
 > Shows how the coefficients associated with a node evolve over time (filtered or smoothed).
-
----
-
-## 📚 Citation
-
-If you use this package in your research, please cite:
-
-```bibtex
-@manual{mdmr2025,
-  title = {MDMr: Bayesian Dynamic Structure Learning for Multivariate Time Series},
-  author = {Arthur R Azevedo},
-  year = {2025},
-  url = {https://github.com/arzevedo/mdmr}
-}
-```
-
 
 ---
 
