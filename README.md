@@ -1,13 +1,10 @@
-# 📦 MDMr: Bayesian Network Modeling for Dynamic Multivariate Time Series
+# MDMr: Bayesian Network Modeling for Dynamic Multivariate Time Series
 
-**MDMr** is an R package for learning the structure and estimating the dynamic parameters of Bayesian networks from multivariate time series. It integrates structure learning algorithms — including `bnlearn::hc` and `GOBNILP` — with Kalman filtering and smoothing to estimate time-varying parameters for each node.
+**MDMr** is an R package for learning the structure and estimating the dynamic parameters of Bayesian networks from multivariate time series. It integrates structure learning algorithms — including `bnlearn::hc` and IPA - `GOBNILP` — with Kalman filtering and smoothing to estimate time-varying parameters for each node.
 
 ---
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![R-CMD-check](https://github.com/arzevedo/mdmr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/arzevedo/mdmr/actions)
-
-## 🚀 Installation
+## Installation
 
 ```r
 # Install dependencies (if not already installed)
@@ -44,15 +41,9 @@ res <- mdm(y)
   - Filtering and smoothing estimates
   - Local scores and optimization metadata
 
-### 3. Print summary of results
-
-```r
-srt(res)
-```
-
 ---
 
-## 📊 Visualizations
+## Visualizations
 
 ### DAG Structure
 
@@ -125,7 +116,7 @@ If you use this package in your research, please cite:
 
 ---
 
-## 🔧 Structure Learning Backends
+## Structure Learning Backends
 
 By default, the `mdm()` function uses the hill-climbing algorithm from the `bnlearn` package to learn the structure of the Bayesian network.
 
@@ -144,7 +135,7 @@ This enables `mdmr` to use `GOBNILP` for structure optimization via the `run_gob
 
 ---
 
-## ⚙️ Advanced
+## GOBNILP
 
 To use `GOBNILP` as the structure optimizer, ensure that:
 - GOBNILP is compiled and its binary is accessible
