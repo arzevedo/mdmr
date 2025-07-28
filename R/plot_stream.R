@@ -38,19 +38,16 @@ plot_stream <- function(mdm_object, child_node, distribution = "filt"){
   
   mt_node <- mt_list[[child_node]]
   
-  # Handle single-param (intercept-only) case
-  if (is.null(dim(mt_node))) stop("Selected node has no dynamic connections")
-  
   param_names <- rownames(mt_node)
   # What if there's only one connection?
-  if (length(param_names)<2) warning("Selected node has only one connection")
-  time <- seq_len(ncol(mt_node))
+  # if (length(param_names)<2) warning("Selected node has only one connection")
+  # time <- seq_len(ncol(mt_node))
   
   df_list <- list()
   
   for (param in seq_len(nrow(mt_node))) {
     name <- param_names[param]
-    if (!grepl("->", name)) next  # Skip intercepts
+    #if (!grepl("->", name)) next  # Skip intercepts
     
     parent <- strsplit(name, "->")[[1]][1]
     
@@ -69,7 +66,7 @@ plot_stream <- function(mdm_object, child_node, distribution = "filt"){
   
   if (length(unique(df_all$parent)) == 1) {
     warning(sprintf(
-      "Only one parent connection found for node %d — stream comparison may not be meaningful.",
+      "Only one parent connection found for node %d - stream comparison may not be meaningful.",
       child_node))
   }
   

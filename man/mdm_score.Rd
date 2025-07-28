@@ -23,6 +23,8 @@ mdm_score(
 \item{GOLB_print}{Logical, if TRUE, save a file that can be used in the GOBNILP optimizer}
 
 \item{subjects_length}{Numeric, how many subjects are contained in dataset}
+
+\item{file_name}{Character, name of the file that saves the calculated scores}
 }
 \description{
 MDM scores

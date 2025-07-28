@@ -32,7 +32,7 @@
 #' @export
 mdm <- function(data_input, method = "hc", ...) {
   if (!is.data.frame(data_input)) {
-    stop("data_input must be a dataframe of observed data [T × N]")
+    stop("data_input must be a dataframe of observed data [T x N]")
   }
   method <- match.arg(method, choices = c("hc", "ipa"))
   

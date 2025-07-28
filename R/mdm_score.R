@@ -8,6 +8,7 @@
 #' @param delta Vector, Sequence of all discount factors. The default is seq(from=0.5, to=1.0, by=0.01)
 #' @param GOLB_print Logical, if TRUE, save a file that can be used in the GOBNILP optimizer
 #' @param subjects_length Numeric, how many subjects are contained in dataset
+#' @param file_name Character, name of the file that saves the calculated scores
 mdm_score <- function(data_input, nbf=15, delta=seq(from=0.5, to=1.0, by=0.01),
                       GOLB_print = FALSE, subjects_length = 1, file_name="") {
   

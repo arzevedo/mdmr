@@ -2,36 +2,54 @@
 % Please edit documentation in R/plot_dag.R
 \name{plot_dag}
 \alias{plot_dag}
-\title{Plot Static Structure of the Bayesian Network as a Heatmap}
+\title{Plot graph or heatmap of Adjacency Matrix}
 \usage{
 plot_dag(
   mdm_object,
   node_labels = NULL,
-  fill_colors = c("white", "red", "grey80")
+  type = c("heatmap", "graph"),
+  show_legend = FALSE,
+  edge_color = "black",
+  node_color = "steelblue",
+  label_color = "white",
+  arrow_size = 4
 )
 }
 \arguments{
-\item{mdm_object}{An object of class \code{"mdm"} returned by \code{\link{mdm}}.}
+\item{mdm_object}{An object of class \code{mdm}, typically returned by the \code{mdm()} function.}
 
-\item{node_labels}{Optional character vector to label nodes in the heatmap.
-If \code{NULL}, nodes are labeled as \code{"V1"}, \code{"V2"}, ..., \code{"VN"}.}
+\item{node_labels}{Optional vector of node labels. If \code{NULL}, uses the column names of \code{mdm_object$data}, or defaults to \code{V1, V2, ..., Vn}.}
 
-\item{fill_colors}{A character vector of three colors corresponding to the fill values for \code{0}, \code{1}, and \code{NA}.}
+\item{type}{Type of plot to display. Either \code{"graph"} (default) for a directed graph with arrows or \code{"heatmap"} for a matrix view.}
+
+\item{show_legend}{Logical. If \code{TRUE}, displays a legend for node/edge elements. Default is \code{FALSE}.}
+
+\item{edge_color}{Color of the graph edges (arrows). Default is \code{"black"}.}
+
+\item{node_color}{Fill color of the graph nodes. Default is \code{"steelblue"}.}
+
+\item{label_color}{Color of the text labels inside the nodes. Default is \code{"white"}.}
+
+\item{arrow_size}{Size of the graph arrow heads (in mm units). Default is \code{4}.}
 }
 \value{
-A \code{ggplot} object showing a heatmap of the adjacency matrix.
+A \code{ggplot} object representing either the graph or the heatmap from the adjacency matrix.
 }
 \description{
-Visualizes the adjacency matrix of the estimated Bayesian network from an MDM object.
-Each tile indicates the presence (or absence) of a directed edge from a parent to a child node.
+Plots the structure of a dynamic Bayesian network estimated by `mdm()` using either
+a DAG (directed acyclic graph) representation or a heatmap of the adjacency matrix.
+}
+\details{
+This function provides two modes of visualization:
+\itemize{
+  \item A \strong{heatmap} showing parent-child relations based on the adjacency matrix.
+  \item A \strong{graph} using the \code{ggraph} and \code{igraph} packages.
+}
 }
 \examples{
 \dontrun{
-# Estimate structure and plot adjacency heatmap
-result <- mdm(data_input = y)
-plot_dag(result)
-
-# Custom node labels
-plot_dag(result, node_labels = c("X1", "X2", "X3"))
+res <- mdm(y)
+plot_dag(res, type = "graph")
+plot_dag(res, type = "heatmap")
 }
 }

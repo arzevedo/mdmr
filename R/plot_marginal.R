@@ -63,7 +63,7 @@ plot_marginal <- function(mdm_object, target_node, distribution = "filt",
   Time <- ncol(beta_node)
   time <- seq_len(Time)
   
-  # Identify dynamic connections (parent → target_node)
+  # Identify dynamic connections (parent -> target_node)
   parent_rows <- which(grepl("->", param_names))
   if (length(parent_rows) == 0) stop("No parent connections found for this node.")
   
@@ -77,7 +77,7 @@ plot_marginal <- function(mdm_object, target_node, distribution = "filt",
     parent_idx <- which(colnames(Y) == parent)
     
     if (length(parent_idx) != 1){
-      warning(sprintf("Parent %s not found in column names of Y — skipping", parent))
+      warning(sprintf("Parent %s not found in column names of Y - skipping", parent))
       next
     }
     

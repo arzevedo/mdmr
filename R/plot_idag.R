@@ -25,15 +25,15 @@
 #' result <- mdm(data_input = y)
 #'
 #' # Create and save the animated heatmap
-#' plot_heatmap_animation(result, fps = 12, output_gif = "network_evolution.gif")
+#' plot_idag(result, fps = 12, output_gif = "network_evolution.gif")
 #' }
 #' @export
-plot_heatmap_animation <- function(mdm_object,
-                                   output_gif = "mdm.gif",
-                                   fps = 10,
-                                   width = 6,
-                                   height = 6,
-                                   dpi = 150) {
+plot_idag <- function(mdm_object,
+                      output_gif = "mdm.gif",
+                      fps = 10,
+                      width = 6,
+                      height = 6,
+                      dpi = 150) {
   if (!inherits(mdm_object, "mdm")) stop("Input must be an object of class 'mdm'")
   if (!requireNamespace("magick", quietly = TRUE)) {
     stop("The 'magick' package is required. Install it with install.packages('magick')")
@@ -78,10 +78,8 @@ plot_heatmap_animation <- function(mdm_object,
   df_long <- do.call(rbind, tidy_all)
   rownames(df_long) <- NULL
   
-  # Remove intercepts
   df_long <- df_long[!grepl("beta0", df_long$parent), ]
   
-  # Consistent axis levels
   all_labels <- sort(unique(c(df_long$parent, df_long$child)))
   df_long$parent <- factor(df_long$parent, levels = rev(all_labels))
   df_long$child  <- factor(df_long$child,  levels = all_labels)
