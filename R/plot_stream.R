@@ -39,46 +39,50 @@ plot_stream <- function(mdm_object, child_node, distribution = "filt"){
   mt_node <- mt_list[[child_node]]
   
   param_names <- rownames(mt_node)
-  # What if there's only one connection?
-  # if (length(param_names)<2) warning("Selected node has only one connection")
-  # time <- seq_len(ncol(mt_node))
   
-  df_list <- list()
-  
-  for (param in seq_len(nrow(mt_node))) {
-    name <- param_names[param]
-    #if (!grepl("->", name)) next  # Skip intercepts
+  if(!is.matrix(mt_node)){
+    warning("Only dynamic paramater for this node is the Intercept. Defaulting to plot all intercepts")
+    plot_arcs(mdm_object=mdm_object,type = "intercept")
+  }else{
+    time <- seq_len(ncol(mt_node))
     
-    parent <- strsplit(name, "->")[[1]][1]
+    df_list <- list()
     
-    df <- data.frame(
-      time   = time,
-      parent = parent,
-      value  = mt_node[param, ],
-      stringsAsFactors = FALSE
-    )
-    df_list[[length(df_list) + 1]] <- df
+    for (param in seq_len(nrow(mt_node))) {
+      name <- param_names[param]
+      #if (!grepl("->", name)) next  # Skip intercepts
+      
+      parent <- strsplit(name, "->")[[1]][1]
+      
+      df <- data.frame(
+        time   = time,
+        parent = parent,
+        value  = mt_node[param, ],
+        stringsAsFactors = FALSE
+      )
+      df_list[[length(df_list) + 1]] <- df
+    }
+    
+    if (length(df_list) == 0) stop("No parent connections found for this node.")
+    
+    df_all <- do.call(rbind, df_list)
+    
+    if (length(unique(df_all$parent)) == 1) {
+      warning(sprintf(
+        "Only one parent connection found for node %d - stream comparison may not be meaningful.",
+        child_node))
+    }
+    
+    p <- ggplot2::ggplot(df_all, ggplot2::aes(x = time, y = value, fill = parent)) +
+      ggstream::geom_stream() +
+      ggplot2::scale_fill_brewer(palette = "Set2") +
+      ggplot2::labs(
+        title = sprintf("Evolution of Parental Influence on Node %d (%s)", child_node, toupper(distribution)),
+        x = "Time", y = "Posterior Mean", fill = "Parent"
+      ) +
+      ggplot2::theme_minimal(base_size = 14) +
+      ggplot2::theme(legend.position = "bottom", legend.title = ggplot2::element_blank())
+    
+    return(p)
   }
-  
-  if (length(df_list) == 0) stop("No parent connections found for this node.")
-  
-  df_all <- do.call(rbind, df_list)
-  
-  if (length(unique(df_all$parent)) == 1) {
-    warning(sprintf(
-      "Only one parent connection found for node %d - stream comparison may not be meaningful.",
-      child_node))
-  }
-  
-  p <- ggplot2::ggplot(df_all, ggplot2::aes(x = time, y = value, fill = parent)) +
-    ggstream::geom_stream() +
-    ggplot2::scale_fill_brewer(palette = "Set2") +
-    ggplot2::labs(
-      title = sprintf("Evolution of Parental Influence on Node %d (%s)", child_node, toupper(distribution)),
-      x = "Time", y = "Posterior Mean", fill = "Parent"
-    ) +
-    ggplot2::theme_minimal(base_size = 14) +
-    ggplot2::theme(legend.position = "bottom", legend.title = ggplot2::element_blank())
-  
-  return(p)
 }
