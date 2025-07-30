@@ -4,7 +4,8 @@
 #' @param m_ad Square Matrix Adjacent with dimension, Number of nodes  1 if edge exists; 0 otherwise
 #' @param nbf the Log Predictive Likelihood will be calculate from this time point. It has to be a positive integer number; The default is 15
 #' @param delta The vector with the sequence of all discount factors
-#'
+#' @importFrom stats na.omit
+#' @export
 CDELT <- function(dts,m_ad,nbf=15,delta=seq(from=0.5, to=1.0, by=0.01)) {
       nd = length(delta)
       Nn = ncol(dts)

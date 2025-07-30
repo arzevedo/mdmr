@@ -8,16 +8,16 @@
 #' @param delta Vector, Sequence of all discount factors. The default is seq(from=0.5, to=1.0, by=0.01)
 #' @param GOLB_print Logical, if TRUE, save a file that can be used in the GOBNILP optimizer
 #' @param subjects_length Numeric, how many subjects are contained in dataset
-#'
+#' @param file_name Character, name of the file that saves the calculated scores
 mdm_score <- function(data_input, nbf=15, delta=seq(from=0.5, to=1.0, by=0.01),
-                      GOLB_print = FALSE, subjects_length = 1) {
-
+                      GOLB_print = FALSE, subjects_length = 1, file_name="") {
+  
   Nt = dim(data_input)[1] #number of time points
   Nn = dim(data_input)[2] #number of nodes
   Ns = subjects_length #number of subjects
-
+  
   dts = array(0, dim=c(Ns, Nt, Nn))
-
+  
   if(subjects_length == 1){
     for(i in 1:Nn){
       dts[,,i] <- data_input[,i]
@@ -31,31 +31,31 @@ mdm_score <- function(data_input, nbf=15, delta=seq(from=0.5, to=1.0, by=0.01),
       }
     }
   }
-
+  
   # Add names to nodes
   if(subjects_length == 1){
     dimnames(dts) <- list(1:Ns, 1:Nt, colnames(data_input))
   } else {
     dimnames(dts) <- list(1:Ns, 1:Nt, colnames(data_input[,,1]))
   }
-
+  
   Ns = dim(dts)[1] # the number of subjects
   Nt = dim(dts)[2] # the number of timepoints
   Nn = dim(dts)[3] # the number of nodes
   Nd =  Nn*2^(Nn-1)# the number of possible parent-child
-
+  
   delt_hat = array(0,dim=c(Ns,Nd)) # the discount factor chosen for each possibility
   lpl = array(0,dim=c(Ns,Nd)) # scores
   par_chil = array(-9,dim=c(Ns,Nd,(Nn+2))) #col1=subject; col2=model; col3={child,number of parents,parents}
-
+  
   # generating all possible combinations
   cc = vector(Nn, mode = "list")
   for (i in 1:Nn){
     cc[[i]] = combn(c(1:Nn),i)
   }
-
+  
   # finding the scores ----
-
+  
   for (s in 1:Ns){
     #cat("loop subject ",s,"/",Ns, "\n")
     Np=0
@@ -85,18 +85,18 @@ mdm_score <- function(data_input, nbf=15, delta=seq(from=0.5, to=1.0, by=0.01),
         par_chil[s,(Np+1):(Np+Nn),3:(2+i)] = t(array((p-1), dim=c(i,Nn)))
         if (i==1){par_chil[s,c((Np+1):(Np+Nn))[p],3:(2+i)] = -9}
         else {diag(par_chil[s,c((Np+1):(Np+Nn))[p],3:(2+i)]) = -9}
-
+        
         Np=Np+Nn
       }
     }
   }
-
+  
   DF_hat= array(-9,dim=c(Ns,Nd,(Nn+2)))
   DF_hat[,,1]=delt_hat
   DF_hat[,,2]=par_chil[,,1]
   DF_hat[,,3:(Nn+2)]=par_chil[,,3:(Nn+2)]
   dimnames(DF_hat)=list(c(1:Ns),c(1:Nd),c("DF","node",1:Nn))
-
+  
   # creating the file with structure of James'programm
   all.score = list()
   for (s in 1:Ns){
@@ -117,22 +117,22 @@ mdm_score <- function(data_input, nbf=15, delta=seq(from=0.5, to=1.0, by=0.01),
       more = more + 1
     }
   }
-
+  
   all.score_dic <- all.score[[1]]
-  #if(!is.null(dimnames(dts)[[3]])){
-  for(i in 1:Nn){
-    all.score_dic[all.score_dic == i-1] <- gsub(x = dimnames(dts)[[3]][i],
-                                                " ", replacement =  "")
+  if(!is.null(dimnames(dts)[[3]])){
+    for(i in 1:Nn){
+      all.score_dic[all.score_dic == i-1] <- gsub(x = dimnames(dts)[[3]][i],
+                                                  " ", replacement =  "")
+    }
   }
-  #}
   if(GOLB_print){
     write.table(x = all.score_dic,
-                file = paste0("mdm_score_", format(Sys.time(), "%d_%b_%Y")),
+                file = paste0("mdm_score_", file_name, format(Sys.time(), "%d_%b_%Y")),
                 quote = FALSE, row.names = FALSE,
                 col.names = FALSE)
-
+    
   }
-
+  
   result <- list(all.score=all.score_dic, DF_hat=DF_hat)
   return(result)
 }

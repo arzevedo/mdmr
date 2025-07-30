@@ -9,7 +9,8 @@ mdm_score(
   nbf = 15,
   delta = seq(from = 0.5, to = 1, by = 0.01),
   GOLB_print = FALSE,
-  subjects_length = 1
+  subjects_length = 1,
+  file_name = ""
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ mdm_score(
 \item{GOLB_print}{Logical, if TRUE, save a file that can be used in the GOBNILP optimizer}
 
 \item{subjects_length}{Numeric, how many subjects are contained in dataset}
+
+\item{file_name}{Character, name of the file that saves the calculated scores}
 }
 \description{
 MDM scores

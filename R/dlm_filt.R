@@ -11,7 +11,7 @@
 #' @param CS0 The squared matrix of prior variance - C*0 | C*0Vt = C0, with length p. The default is non-informative prior, with prior variance equal to 3 times the observed variance.
 #' @param n0 The prior hypermarameters of precision phi ~ G(n0/2; d0/2). The default is non-informative prior, with value of 0.001. n0 has to be higher than 0.
 #' @param d0 The prior hypermarameters of precision phi ~ G(n0/2; d0/2). The default is non-informative prior, with value of 0.001. n0 has to be higher than 0.
-#'
+#' @export
 dlm_filt <- function(Yt, Ft, delta, Gt = array(diag(nrow(Ft)), dim=c(nrow(Ft),nrow(Ft),length(Yt))), m0 = rep(0,nrow(Ft)), CS0 = 3*diag(nrow(Ft)), n0 = 0.001, d0 = 0.001) {
 
       # defining objects
