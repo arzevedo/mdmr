@@ -21,16 +21,22 @@ mdm_structure <- function(data_input,
                           verbose = TRUE) {
   
   method <- match.arg(method, choices = c("hc", "ipa"))
-  if (method == "hc") {
-    if (verbose) message("Running hill-climbing with custom MDM score...")
+  if(method == "hc"){
+    if(verbose) message("Running hill-climbing with custom MDM score...")
     
-    if (is.null(colnames(data_input))) {
+    if(is.null(colnames(data_input))){
       colnames(data_input) <- paste0("V", seq_len(ncol(data_input)))
+    }
+    
+    if(package_version(packageVersion("bnlearn"))>"4.9"){
+      arg_score_name <- "custom-score"
+    }else{
+      arg_score_name <- "custom"
     }
     
     hill <- bnlearn::hc(
       x = data.frame(data_input),
-      score = "custom-score",
+      score = arg_score_name,
       fun = mdm_score_bn,
       args = list(nbf = nbf, method = "Brent", call = FALSE)
     )
@@ -40,16 +46,16 @@ mdm_structure <- function(data_input,
     adj <- matrix(0, nrow = N, ncol = N, dimnames = list(var_names, var_names)
     )
     
-    if (length(hill$arcs) > 0) {
-      for (z in seq_len(nrow(hill$arcs))) {
+    if(length(hill$arcs) > 0){
+      for(z in seq_len(nrow(hill$arcs))){
         from <- hill$arcs[z, 1]
         to <- hill$arcs[z, 2]
         adj[from, to] <- 1
       }
     }
-  } else if (method == "ipa") {
-    if (is.null(gobnilp_path)) stop("You must provide gobnilp_path when using method = 'ipa'.")
-    if (verbose) message("Computing MDM scores...")
+  } else if(method == "ipa"){
+    if(is.null(gobnilp_path)) stop("You must provide gobnilp_path when using method = 'ipa'.")
+    if(verbose) message("Computing MDM scores...")
     colnames(data_input) <- NULL
     score_result <- mdm_score(data_input, nbf = nbf, delta = delta,
                               GOLB_print = TRUE, subjects_length = subjects_length)
