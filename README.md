@@ -1,6 +1,6 @@
 # MDMr: Bayesian Network Modeling for Dynamic Multivariate Time Series
 
-**MDMr** is an R package for learning the structure and estimating the dynamic parameters of Bayesian networks from multivariate time series. It integrates structure learning algorithms — including `bnlearn::hc` and IPA - `GOBNILP` — with Kalman filtering and smoothing to estimate time-varying parameters for each node.
+**MDMr** is an R package for learning the structure and estimating the dynamic parameters of Bayesian networks from multivariate time series. It integrates structure learning algorithms including `bnlearn::hc` and IPA - `GOBNILP` with Kalman filtering and smoothing to estimate time-varying parameters for each node.
 
 ---
 
@@ -18,7 +18,7 @@ devtools::install_github("arzevedo/mdmr")
 
 ## Example Usage
 
-This walkthrough demonstrates how to use `MDMr` to learn a Bayesian network and visualize the results.
+This walkthrough demonstrates how to use `MDMr` to learn a dynamic bayesian network and visualize the results.
 
 ### 1. Load the package and sample data
 
