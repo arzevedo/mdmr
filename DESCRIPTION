@@ -16,11 +16,10 @@ Imports:
       bnlearn,
       reticulate,
       ggplot2,
+      magick,
       ggstream,
       igraph,
       ggraph
-Suggests:
-    magick
 Depends: 
     R (>= 3.5)
 RoxygenNote: 7.3.2
