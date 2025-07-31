@@ -71,7 +71,7 @@ plot_arcs(res)
 
 ```r
 # Animated heatmap of posterior estimates across time
-plot_heatmap_animation(res)
+plot_idag(res)
 ```
 
 > Each tile represents the magnitude of a dynamic parameter at each time step. This animation captures the temporally varying intensity of connections in the network structure.
