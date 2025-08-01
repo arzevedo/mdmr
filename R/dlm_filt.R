@@ -65,7 +65,7 @@ dlm_filt <- function(Yt, Ft, delta, Gt = array(diag(nrow(Ft)), dim=c(nrow(Ft),nr
             Ct[,,i] = CSt * dt[i] / nt[i]
 
             # Log Predictive Likelihood
-            lpl[i] <- lgamma((nt[i]+1)/2)-lgamma(nt[i]/2)-0.5*log(pi*nt[i]*Qt[i])-((nt[i]+1)/2)*log(1+(1/nt[i])*et^2/Qt[i])
+            lpl[i] <- lgamma((nt[i-1]+1)/2)-lgamma(nt[i-1]/2)-0.5*log(pi*nt[i-1]*Qt[i])-((nt[i-1]+1)/2)*log(1+(1/nt[i-1])*et^2/Qt[i])
 
       }
 
