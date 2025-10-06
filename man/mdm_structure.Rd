@@ -15,9 +15,17 @@ mdm_structure(
 )
 }
 \arguments{
-\item{data_input}{Data frame or array. Input multivariate time series (possibly with subjects).}
+\item{data_input}{Data frame. Input multivariate time series (possibly with subjects).}
 
-\item{method}{Character. "hc" to use hill-climbing from `bnlearn`, or "ipa" to use the GOBNILP optimizer.}
+\item{method}{A \code{character} string indicating the method to use for structure learning. Options are:
+\describe{
+  \item{"hc"}{Hill-climbing structure learning using the `bnlearn` package.}
+  \item{"tabu"}{Tabu search greedy search learning using the `bnlearn` package.}
+  \item{"h2pc"}{Hybrid HPC (H2PC) learning using the `bnlearn` package.}
+  \item{"mmhc"}{Max-Min Hill Climbing (MMHC) learning using the `bnlearn` package.}
+  \item{"rsmax2"}{2-phase Restricted Maximization (RSMAX2) learning using the `bnlearn` package.}
+  \item{"ipa"}{Integer Programming Approach using GOBNILP with Jaakkola scoring.}
+}}
 
 \item{gobnilp_path}{Character. Path to the compiled GOBNILP binary (required if method = "gobnilp").}
 
@@ -34,5 +42,6 @@ A binary adjacency matrix.
 }
 \description{
 This function computes MDM scores and learns the structure of a dynamic Bayesian network,
-returning its adjacency matrix using either `bnlearn::hc` or GOBNILP optimizer.
+returning its adjacency matrix using either `bnlearn::`(hc/tabu/mmhc/h2pc/rsmax2) with a custom 
+decomposable or GOBNILP ("ipa") optimizer.
 }

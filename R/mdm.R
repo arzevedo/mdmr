@@ -2,12 +2,16 @@
 #'
 #' This is the main function of the MDMr package. It estimates the structure of a Bayesian Network from multivariate time series data
 #' and calculates dynamic parameters using both filtering and smoothing techniques. The structure can be inferred using either the 
-#' hill-climbing algorithm from the `bnlearn` package or using `IPA` via a GGOBNILP and Jaakkola local score file interface.
+#' an algorithm from the `bnlearn` package or using `IPA` via a GOBNILP and Jaakkola local score file interface.
 #'
 #' @param data_input A \code{data.frame} of observed data. Rows represent time points, and columns represent nodes. Must be complete (no missing values).
 #' @param method A \code{character} string indicating the method to use for structure learning. Options are:
 #'   \describe{
 #'     \item{"hc"}{Hill-climbing structure learning using the `bnlearn` package.}
+#'     \item{"tabu"}{Tabu search greedy search learning using the `bnlearn` package.}
+#'     \item{"h2pc"}{Hybrid HPC (H2PC) learning using the `bnlearn` package.}
+#'     \item{"mmhc"}{Max-Min Hill Climbing (MMHC) learning using the `bnlearn` package.}
+#'     \item{"rsmax2"}{2-phase Restricted Maximization (RSMAX2) learning using the `bnlearn` package.}
 #'     \item{"ipa"}{Integer Programming Approach using GOBNILP with Jaakkola scoring.}
 #'   }
 #' @param ... Additional arguments passed to \code{\link{mdm_structure}}, e.g., \code{gobnilp_path}.
@@ -34,7 +38,10 @@ mdm <- function(data_input, method = "hc", ...) {
   if (!is.data.frame(data_input)) {
     stop("data_input must be a dataframe of observed data [T x N]")
   }
-  method <- match.arg(method, choices = c("hc", "ipa"))
+  method <- match.arg(method, choices = c(
+    "hc", "tabu", "mmhc", "h2pc", "rsmax2",
+    "ipa")
+  )
   
   # Structure (DAG)
   adj_mat <- mdm_structure(data_input = data_input, method = method, ...)

@@ -12,6 +12,10 @@ mdm(data_input, method = "hc", ...)
 \item{method}{A \code{character} string indicating the method to use for structure learning. Options are:
 \describe{
   \item{"hc"}{Hill-climbing structure learning using the `bnlearn` package.}
+  \item{"tabu"}{Tabu search greedy search learning using the `bnlearn` package.}
+  \item{"h2pc"}{Hybrid HPC (H2PC) learning using the `bnlearn` package.}
+  \item{"mmhc"}{Max-Min Hill Climbing (MMHC) learning using the `bnlearn` package.}
+  \item{"rsmax2"}{2-phase Restricted Maximization (RSMAX2) learning using the `bnlearn` package.}
   \item{"ipa"}{Integer Programming Approach using GOBNILP with Jaakkola scoring.}
 }}
 
@@ -29,7 +33,7 @@ An object of class \code{"mdm"}, which is a list with the following components:
 \description{
 This is the main function of the MDMr package. It estimates the structure of a Bayesian Network from multivariate time series data
 and calculates dynamic parameters using both filtering and smoothing techniques. The structure can be inferred using either the 
-hill-climbing algorithm from the `bnlearn` package or using `IPA` via a GGOBNILP and Jaakkola local score file interface.
+an algorithm from the `bnlearn` package or using `IPA` via a GOBNILP and Jaakkola local score file interface.
 }
 \examples{
 \dontrun{
