@@ -70,9 +70,10 @@ res <- mdm(data_input = y, method = "hc")
   - The inferred DAG structure
   - Filtering and smoothing estimates
   - Local scores and optimization metadata
-  - Currently the availiable methods are “hc” Hill-climbing structure
-    learning using the `bnlearn` package and “ipa”: Integer Programming
-    Approach using GOBNILP with Jaakkola scoring.
+  - Currently the availiable methods are
+    “hc”/“tabu”/“mmhc”/“h2pc”/“rsmax2” structure learning using the
+    `bnlearn` package and “ipa”: Integer Programming Approach using
+    GOBNILP with Jaakkola scoring.
 
 ------------------------------------------------------------------------
 
