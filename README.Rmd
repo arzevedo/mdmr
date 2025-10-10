@@ -156,7 +156,7 @@ plot_marginal(mdm_object = res, distribution = "filt", target_node = 2,
 
 ## Structure Learning Backends
 
-By default, the `mdm()` function uses the hill-climbing algorithm from the `bnlearn` package to learn the structure of the Bayesian network.
+By default, the `mdm()` function uses the hill-climbing algorithm from the `bnlearn` package to learn the structure of the Bayesian network. Other heuristic methods are also available, like Tabu search, Max-Min Hill-Climbing, H2PC, and RSMAX2 from the same package.
 
 If you prefer to use the Integer Programming Approach (IPA) via GOBNILP, make sure to:
 
